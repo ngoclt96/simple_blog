@@ -38,43 +38,11 @@ class BaseModel extends Model
      */
     public function scopeSearch($query, $params)
     {
-
-        $tableModel = $query->getModel()->getTable();
-        foreach ($this->getSearchAbleField() as $key => $value) {
-            if (isset($params[$key])) {
-                switch ($value['search']['type']) {
-                    case 'selectbox' :
-                        $query->where($tableModel . '.' . $key, '=', $params[$key]);
-                        break;
-                    case 'date' :
-                        $date = Carbon::createFromFormat(Constants::JP_DATE_FORMAT, $params[$key])->format('Y-m-d');
-                        if ($date) {
-                            $query->whereDate($tableModel . '.' . $key, $date);
-                        }
-                        break;
-                    default:
-                        $query->where($tableModel . '.' . $key, 'LIKE', '%' . $params[$key] . '%');
-                        break;
-                }
-            }
-        }
-        return $query;
+//
     }
     public function getDateFields()
     {
         return $this->dates;
-    }
-    /**
-     * @use generate new code for hotel and reserve
-     */
-    public function generateCode(): string
-    {
-        $rs = $this->whereYear('created_at', '=', date('Y'))->whereMonth('created_at', '=', date('m'))->orderBy('id', 'DESC')->first();
-        $num = 1;
-        if ($rs) {
-            $num = intval(substr($rs->code, -6)) + 1;
-        }
-        return date('y') . str_pad(date('m'), 2, '0') . str_pad($num, 6, '0', STR_PAD_LEFT);
     }
 
     public function isAdmin()
