@@ -62,5 +62,18 @@ class User extends BaseModel implements
     /**
      * Get all children department of current user
      */
+    public function scopeAvailableUsers($query, $params)
+    {
+        $query->where('deleted', 0);
+        if (isset($params['sort']) && $params['sort']) {
+            $key = strtolower(array_keys(getSort())[0]);
+            if (array_key_exists($key, $this->searchAble)) {
+                unset($params['sort']);
+                $query = $query->orderBy("posts." . $key, getSort($key));
+            }
+        }
 
+
+        return $query;
+    }
 }

@@ -88,7 +88,7 @@ class  LoginController extends BaseController
             $this->fireLockoutEvent($request);
             return $this->sendLockoutResponse($request);
         }
-        
+
         if ($this->attemptLogin($request)) {
             return $this->sendLoginResponse($request);
         }
@@ -99,7 +99,7 @@ class  LoginController extends BaseController
             $this->incrementLoginAttempts($request);
         }
         $this->validateLogin($request);
-        
+
         return $this->sendFailedLoginResponse($request);
     }
 
