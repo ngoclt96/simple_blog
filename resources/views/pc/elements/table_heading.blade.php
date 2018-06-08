@@ -5,14 +5,6 @@
     @foreach($heading as $name=>$attr)
         <th class="text-center">
             {{$attr['label']}}&nbsp;
-            {{--@if(isset($attr['sort']))--}}
-                {{--@if($attr['sort'] == 'numeric')--}}
-                    {{--<a class="sorting {{ getSort($name) ? 'active' : '' }}" data-target="{{ getSort($name) ? getSort($name) : 'asc' }}" data-type="{{ $name }}" href="javascript:;"><i class="fa fa-sort-numeric-{{ getSort($name) ? getSort($name) : 'asc' }}"></i> </a>--}}
-                 {{--@endif--}}
-                {{--@if($attr['sort'] == 'alpha')--}}
-                    {{--<a class="sorting {{ getSort($name) ? 'active' : '' }}" data-target="{{ getSort($name) ? getSort($name) : 'asc' }}" data-type="{{ $name }}" href="javascript:;"><i class="fa fa-sort-alpha-{{ getSort($name) ? getSort($name) : 'asc' }}"></i></a>--}}
-                {{--@endif--}}
-            {{--@endif--}}
         </th>
     @endforeach
     <th style="width: 180px;text-align: center" aria-controls="datatable-responsive" rowspan="1" colspan="1" >Action</th>
