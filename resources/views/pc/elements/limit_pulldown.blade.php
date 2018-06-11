@@ -1,5 +1,5 @@
 @php
-    $limits = [ 10, 20, 50, 100 ];
+    $limits = [ 5, 10, 15, 20 ];
     $current = request()->input('limit');
 @endphp
 <div class="col-sm-4">

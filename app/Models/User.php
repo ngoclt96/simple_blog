@@ -55,7 +55,7 @@ class User extends BaseModel implements
             'sort' => 'alpha',
             'search' => [
                 'type' => 'numeric',
-                'placeholder' => ''
+                'placeholder' => 'text'
             ]
         ]
     ];

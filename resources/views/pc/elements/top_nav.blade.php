@@ -8,7 +8,7 @@
             <li class="">
                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     @if (Auth::check())
-                        {{ Auth::user()->username }}&nbsp;
+                        {{ Auth::user()->name }}&nbsp;
                     @endif
                     <span class=" fa fa-angle-down"></span>
                 </a>
