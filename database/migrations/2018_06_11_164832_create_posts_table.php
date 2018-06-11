@@ -17,10 +17,12 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('title');
-            $table->string('content');
-            $table->integer('approver_id');
-            $table->dateTime('deleted_at');
-            $table->dateTime('approved_at');
+            $table->text('content');
+            $table->integer('approve')->default(0);
+            $table->integer('approver_id')->nullable();
+            $table->integer('deleted')->default(0);
+            $table->dateTime('deleted_at')->nullable();
+            $table->dateTime('approved_at')->nullable();
             $table->timestamps();
         });
     }
