@@ -1,8 +1,6 @@
 <?php
 namespace App\Http\Controllers;
 
-
-
 use App\Models\Post;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
@@ -12,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 class PostController extends BaseController
 {
     use ValidatesRequests;
+
     public function index()
     {
         $model = new Post();
@@ -76,18 +75,18 @@ class PostController extends BaseController
 
     }
 
-    public function approve($id = null) {
+    public function approve($id = null)
+    {
         $post = Post::findOrFail($id);
         $post->id = $id;
         dd($id);
         $post = new Post();
         dd($post->id);
         $post = Post::findOrFail(request()->id);
-        if($post->approve == 1) {
+        if ($post->approve == 1) {
             $post->approve = 0;
             $post->approver_id = null;
-        }
-        else {
+        } else {
             $post->approve = 1;
             $post->approver_id = Auth::user()->id;
         }
@@ -101,13 +100,13 @@ class PostController extends BaseController
     {
         $post = Post::findOrFail($id);
         $post->id = $id;
-        if($post->approve == 1) {
+        if ($post->approve == 1) {
             $detail_post = $post->select('users.name', 'posts.title', 'posts.content', 'posts.created_at', 'posts.updated_at')
                 ->where('posts.id', $id)
                 ->join('users', 'users.id', 'posts.user_id')->first();
-            return view($this->getViewDir() . '.' . 'post.show', ['post' =>$detail_post]);
+            return view($this->getViewDir() . '.' . 'post.show', ['post' => $detail_post]);
         }
-        return redirect(route('posts.index'))->with('success','This post has not been approved by the admin!');
+        return redirect(route('posts.index'))->with('success', 'This post has not been approved by the admin!');
 
     }
 }
