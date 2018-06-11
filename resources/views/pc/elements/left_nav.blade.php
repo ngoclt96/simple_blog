@@ -11,26 +11,11 @@
                 <li><a><i class="fa fa-list"></i> Posts Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{{ route('posts.index') }}"> Post List</a></li>
-                        <li><a href="#"> Post Form</a></li>
+                        <li><a href="{{ route('posts.form') }}"> Post Form</a></li>
                     </ul>
                 </li>
 
             </ul>
         </div>
-    </div>
-    <!-- /sidebar menu -->
-    <div class="sidebar-footer hidden-small">
-        <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Settings">
-            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-        </a>
-        <a data-toggle="tooltip" data-placement="top" title="" data-original-title="FullScreen">
-            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-        </a>
-        <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Lock">
-            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-        </a>
-        <a  onclick="event.preventDefault();   document.getElementById('logout-form').submit();" data-toggle="tooltip" data-placement="top" title="" href="{{ route('login.logout') }}" data-original-title="Logout">
-            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-        </a>
     </div>
 </div>

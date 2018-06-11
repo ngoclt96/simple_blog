@@ -1,20 +1,20 @@
 <?php
 namespace App\Http\Controllers;
 
-
-
 use App\Models\Post;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class PostController extends BaseController
 {
     use ValidatesRequests;
+
     public function index()
     {
         $model = new Post();
         $searchField = $model->getSearchAbleField();
-        $model->getSearch('search_posts_remember');
         $params = request()->input();
         $post = $model->availablePosts($params);
         $post = $post->search($params);
@@ -42,7 +42,7 @@ class PostController extends BaseController
     {
         $post = new Post();
         $this->validate($request, [
-//            'user_id' => 'required|integer',
+            'user_id' => 'required|integer',
             'title' => 'required',
             'content' => 'required'
         ]);
@@ -50,7 +50,6 @@ class PostController extends BaseController
         if ($request->input('id')) {
             $post->id = $request->input('id');
         }
-
         $request->session()->put('postsConfirm', $post);
         $this->view(['post' => $post]);
     }
@@ -73,6 +72,38 @@ class PostController extends BaseController
     {
         $this->deleteRecord('Post');
         return redirect(route('posts.index'));
+
+    }
+
+    public function approve()
+    {
+//        $post = new Post();
+//        dd($post->id);
+//        $post = Post::findOrFail(request()->id);
+//        if ($post->approve == 1) {
+//            $post->approve = 0;
+//            $post->approver_id = null;
+//        } else {
+//            $post->approve = 1;
+//            $post->approver_id = Auth::user()->id;
+//        }
+//        $post->update();
+//        dd($post);
+//        return redirect(route('posts.index'));
+
+    }
+
+    public function show($id = null)
+    {
+        $post = Post::findOrFail($id);
+        $post->id = $id;
+        if ($post->approve == 1) {
+            $detail_post = $post->select('users.name', 'posts.title', 'posts.content', 'posts.created_at', 'posts.updated_at')
+                ->where('posts.id', $id)
+                ->join('users', 'users.id', 'posts.user_id')->first();
+            return view($this->getViewDir() . '.' . 'post.show', ['post' => $detail_post]);
+        }
+        return redirect(route('posts.index'))->with('success', 'This post has not been approved by the admin!');
 
     }
 }

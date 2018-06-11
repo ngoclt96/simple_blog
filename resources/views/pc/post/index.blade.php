@@ -63,7 +63,13 @@
                                                         @php $name = $post->$key @endphp
 
                                                         <td class="text-center">
+                                                            @if($key == "approve")
+                                                            @include('pc.elements.approve', ['item' => $post])
+                                                            @else
+
                                                             {!! $name !!}
+
+                                                            @endif
                                                         </td>
                                                     @endforeach
                                                     <td class="text-center">

@@ -52,19 +52,14 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
-        // Middleware Users And Teacher
+
         'user_auth' => \App\Http\Middleware\CheckUserMiddleware::class,
-        'member_auth' => \App\Http\Middleware\CheckMemberMiddleware::class,
         'user_guest' => \App\Http\Middleware\RedirectIfUserAuthenticated::class,
-//        'teacher_auth' => \App\Http\Middleware\CheckTeacherMiddleware::class,
-//        'teacher_guest' => \App\Http\Middleware\RedirectIfTeacherAuthenticated::class,
+
 
         // Authorization
         'ceberus' => \App\Http\Middleware\CerberusMiddleware::class,
-        //check Attemp Email User And Teacher
-        'check_attemp' => \App\Http\Middleware\CheckAttempMiddlware::class,
-        //members
-        // check dates from request to Reserver
-//        'reserve_date' => \App\Http\Middleware\ReserveDateMiddleware::class
+
+     
     ];
 }

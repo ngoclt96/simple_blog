@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\AppConst\Constants;
 use Assets;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Route;
@@ -63,7 +64,9 @@ class BaseController extends Controller
         if($record = $model::where('id',$id )->first()) {
             DB::transaction(function () use ($record) {
                 try {
-                    $record->update(['deleted' => 1]);
+                    $ts = Carbon::now()->toDateTimeString();
+                    $data = array('deleted_at' => $ts, 'deleted' => 1);
+                    $record->update($data);
                 } catch (\PDOException $e) {
                     throw $e;
                 }

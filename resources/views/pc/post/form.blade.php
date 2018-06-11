@@ -35,14 +35,6 @@
                                 <span class="error"> {{ $errors->first('content') ?? '' }}</span>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Approver_id<span class="textred">(*)</span></label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                {!! Form::text('approver_id', null, ['class' => 'form-control col-md-7 col-xs-12', 'required' => false, 'value' => old('approver_id')]) !!}
-                                <span class="error"> {{ $errors->first('approver_id') ?? '' }}</span>
-                            </div>
-                        </div>
                         <div class="ln_solid"></div>
                         <div class="form-group text-center">
                             <a href="{{ route('posts.index') }}" class="buttonFinish  btn btn-default">Back</a>

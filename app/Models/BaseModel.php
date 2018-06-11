@@ -14,22 +14,7 @@ class BaseModel extends Model
     {
         return $this->searchAble;
     }
-    /**
-     * @param $searchRemmember
-     * @uses get search fields
-     */
-    public function getSearch($searchRemmember){
-        if (session($searchRemmember) && count(session($searchRemmember)) > 1) {
-            $searchFields = session($searchRemmember);
-            $this->searchAble = array_filter($this->searchAble, function($key) use ($searchFields) {
-                return in_array($key, $searchFields);
-            }, ARRAY_FILTER_USE_KEY);
-        } else {
-            $this->searchAble = array_filter($this->searchAble, function($val, $key){
-                return $val['default'] == true;
-            }, ARRAY_FILTER_USE_BOTH);
-        }
-    }
+
     /**
      * @param $query
      * @param $params
@@ -38,7 +23,29 @@ class BaseModel extends Model
      */
     public function scopeSearch($query, $params)
     {
-//
+        $tableModel = $query->getModel()->getTable();
+        foreach ($this->getSearchAbleField() as $key => $value) {
+            if (isset($params[$key])) {
+                switch ($value['search']['type']) {
+                    case 'text' :
+                        $query->where($tableModel . '.' . $key, '=', $params[$key]);
+                        break;
+                    case 'selectbox' :
+                        $query->where($tableModel . '.' . $key, '=', $params[$key]);
+                        break;
+                    case 'date' :
+                        $date = Carbon::createFromFormat(Constants::DATE_FORMAT, $params[$key])->format('Y-m-d');
+                        if ($date) {
+                            $query->whereDate($tableModel . '.' . $key, $date);
+                        }
+                        break;
+                    default:
+                        $query->where($tableModel . '.' . $key, 'LIKE', '%' . $params[$key] . '%');
+                        break;
+                }
+            }
+        }
+        return $query;
     }
     public function getDateFields()
     {
