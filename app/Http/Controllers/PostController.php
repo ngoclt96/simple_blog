@@ -75,24 +75,21 @@ class PostController extends BaseController
 
     }
 
-    public function approve($id = null)
+    public function approve()
     {
-        $post = Post::findOrFail($id);
-        $post->id = $id;
-        dd($id);
-        $post = new Post();
-        dd($post->id);
-        $post = Post::findOrFail(request()->id);
-        if ($post->approve == 1) {
-            $post->approve = 0;
-            $post->approver_id = null;
-        } else {
-            $post->approve = 1;
-            $post->approver_id = Auth::user()->id;
-        }
-        $post->update();
-        dd($post);
-        return redirect(route('posts.index'));
+//        $post = new Post();
+//        dd($post->id);
+//        $post = Post::findOrFail(request()->id);
+//        if ($post->approve == 1) {
+//            $post->approve = 0;
+//            $post->approver_id = null;
+//        } else {
+//            $post->approve = 1;
+//            $post->approver_id = Auth::user()->id;
+//        }
+//        $post->update();
+//        dd($post);
+//        return redirect(route('posts.index'));
 
     }
 

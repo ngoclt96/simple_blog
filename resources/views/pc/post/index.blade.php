@@ -64,7 +64,7 @@
 
                                                         <td class="text-center">
                                                             @if($key == "approve")
-                                                            @include('pc.elements.approve', ['approve' => $post->approve])
+                                                            @include('pc.elements.approve', ['item' => $post])
                                                             @else
 
                                                             {!! $name !!}

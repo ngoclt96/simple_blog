@@ -13,7 +13,6 @@
                     <span class=" fa fa-angle-down"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="#">Profile</a></li>
                     <li>
                         <a href="{{ route('login.logout') }}"
                            onclick="event.preventDefault();   document.getElementById('logout-form').submit();">

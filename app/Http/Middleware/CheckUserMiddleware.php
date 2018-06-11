@@ -20,7 +20,7 @@ class CheckUserMiddleware
     public function handle($request, Closure $next, $guard = null)
     {
         if (!Auth::check()) {
-            return redirect('/user/login');
+            return redirect('/login');
         }
         return $next($request);
 
