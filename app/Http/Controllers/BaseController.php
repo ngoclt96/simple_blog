@@ -38,7 +38,7 @@ class BaseController
     {
         $this->view();
     }
-    public function form($id = null)
+    public function form()
     {
         return response()->view(Constants::VIEW_DIR . '.errors.404', [], '404');
     }
