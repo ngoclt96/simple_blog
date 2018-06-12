@@ -18,7 +18,7 @@
  * ----------------------------------------
  */
 
-
+Route::get('/', 'PostController@post_approved')->name('home');
 /*register user*/
 Route::get('register/{id}', 'Auth\Users\RegisterController@form')->name('user.register.edit');
 Route::post('register/confirm', 'Auth\Users\RegisterController@confirm')->name('user.register.confirm');
@@ -44,6 +44,6 @@ Route::group(['middleware' => 'user_auth'], function () {
     Route::post('posts/confirm', 'PostController@confirm')->name('posts.confirm');
     Route::get('posts/complete', 'PostController@complete')->name('posts.complete');
     Route::post('posts/delete', 'PostController@delete')->name('posts.delete');
-    Route::post('posts/approve', 'PostController@approve')->name('posts.approve');
-    Route::post('posts/show/{id}', 'PostController@show')->name('posts.show');
+    Route::post('posts/approve/{id}', 'PostController@approve')->name('posts.approve');
 });
+Route::get('posts/show/{id}', 'PostController@show')->name('posts.show');

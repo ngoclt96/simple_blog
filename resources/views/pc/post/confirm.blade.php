@@ -12,12 +12,6 @@
                     </div>
                     <div class="x_content">
                         <div class="form-group col-md-8 col-md-offset-2">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">User</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                {{ $post->user_id ? $post->user->name : '---' }}
-                            </div>
-                        </div>
-                        <div class="form-group col-md-8 col-md-offset-2">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Title</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 {{ $post->title ? $post->title : '---' }}
@@ -27,12 +21,6 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Content</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 {{ $post->content ? $post->content : '---' }}
-                            </div>
-                        </div>
-                        <div class="form-group col-md-8 col-md-offset-2">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Approver_id</label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                {{ $post->approver_id ? $post->approver_id : '---' }}
                             </div>
                         </div>
                         <div class="ln_solid col-md-12"></div>

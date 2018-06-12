@@ -1,15 +1,19 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\AppConst\Constants;
 use App\Models\Post;
+use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
 class PostController extends BaseController
 {
-    use ValidatesRequests;
+    use ValidatesRequests, AuthorizesRequests;
+
+    protected $limit = Constants::PAGE_RECORD;
 
     public function index()
     {
@@ -28,21 +32,22 @@ class PostController extends BaseController
         $post = new Post();
         if ($id) {
             $post = Post::findOrFail($id);
+            if ($post->user_id != Auth::user()->id) {
+                return redirect(route('posts.index'))->with('success', 'You do not edit this post!');
+            }
         }
         if (old()) {
             $post->fill(old());
         }
-        (request()->session()->has('postsConfirm') && request()->query('back') == 'true') ? $booking = request()->session()->get('postsConfirm') : request()->session()->forget('postsConfirm');
+        (request()->session()->has('postsConfirm') && request()->query('back') == 'true') ? $post = request()->session()->get('postsConfirm') : request()->session()->forget('postsConfirm');
         $post->id = $id;
-        $user = $post->pluckUser();
-        $this->view(['post' => $post, 'user' => $user]);
+        $this->view(['post' => $post]);
     }
 
     public function confirm(Request $request)
     {
         $post = new Post();
         $this->validate($request, [
-            'user_id' => 'required|integer',
             'title' => 'required',
             'content' => 'required'
         ]);
@@ -63,6 +68,7 @@ class PostController extends BaseController
         if ($postsConfirm->id) {
             $postsConfirm->exists = true;
         }
+        $postsConfirm->user_id = Auth::user()->id;
         $postsConfirm->save();
         request()->session()->forget('postsConfirm');
         $this->view();
@@ -75,21 +81,21 @@ class PostController extends BaseController
 
     }
 
-    public function approve()
+    public function approve($id = null)
     {
-//        $post = new Post();
-//        dd($post->id);
-//        $post = Post::findOrFail(request()->id);
-//        if ($post->approve == 1) {
-//            $post->approve = 0;
-//            $post->approver_id = null;
-//        } else {
-//            $post->approve = 1;
-//            $post->approver_id = Auth::user()->id;
-//        }
-//        $post->update();
-//        dd($post);
-//        return redirect(route('posts.index'));
+        $user = User::findOrFail(Auth::user()->id);
+        if ($user->permission == 1) {
+            $post = Post::findOrFail($id);
+            $post->id = $id;
+            if ($post->approve == 1) {
+                $post->approve = 0;
+            } else {
+                $post->approve = 1;
+            }
+            $post->save();
+            return redirect(route('posts.index'));
+        }
+        return redirect(route('posts.index'))->with('success', 'You have no right to approve this post!');
 
     }
 
@@ -98,12 +104,27 @@ class PostController extends BaseController
         $post = Post::findOrFail($id);
         $post->id = $id;
         if ($post->approve == 1) {
-            $detail_post = $post->select('users.name', 'posts.title', 'posts.content', 'posts.created_at', 'posts.updated_at')
+            $detail_post = $post->select
+            (
+                'users.name',
+                'posts.title',
+                'posts.content',
+                'posts.created_at',
+                'posts.updated_at'
+            )
                 ->where('posts.id', $id)
                 ->join('users', 'users.id', 'posts.user_id')->first();
             return view($this->getViewDir() . '.' . 'post.show', ['post' => $detail_post]);
         }
         return redirect(route('posts.index'))->with('success', 'This post has not been approved by the admin!');
+
+    }
+
+    public function post_approved()
+    {
+        $post_approved = Post::where('posts.approve', 1)->select('posts.*', 'users.name')
+            ->join('users', 'users.id', 'posts.user_id')->get();
+        return view('home', ['post' => $post_approved]);
 
     }
 }

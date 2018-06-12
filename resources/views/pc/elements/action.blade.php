@@ -18,9 +18,9 @@
     }
 @endphp
 <a href="{{ $edit }}" class="btn btn-primary btn-xs">Edit</a>
-<button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm1-{!! $val !!}">Delete</button>
-<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm-{!! $val !!}">Show</button>
-<div class="modal fade bs-example-modal-sm1-{!! $val !!}" tabindex="-1" role="dialog" aria-hidden="true">
+<button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm1-{{ $val }}">Delete</button>
+<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm-{{ $val }}">Show</button>
+<div class="modal fade bs-example-modal-sm1-{{ $val }}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
@@ -41,7 +41,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade bs-example-modal-sm-{!! $val !!}" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade bs-example-modal-sm-{{ $val }}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
@@ -52,7 +52,7 @@
                 <h4>@lang('Are you want to see the post')?</h4>
             </div>
             <div class="modal-footer">
-                {!! Form::model(null, ['url' => $show, 'method' => 'POST']) !!}
+                {!! Form::model(null, ['url' => $show, 'method' => 'GET']) !!}
                 {!! Form::hidden($key, $val) !!}
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-danger">Ok</button>

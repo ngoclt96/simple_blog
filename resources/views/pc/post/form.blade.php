@@ -15,13 +15,6 @@
                         {!! Form::hidden('id', $post->id) !!}
 
                         <div class="form-group">
-                            <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12"> User<span class="textred">(*)</span> </label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                {!! Form::select('user_id', $user, null, ['class' => 'form-control', 'placeholder' => '___Choose user_id___']) !!}
-                                <span class="error"> {{ $errors->first('user_id') ?? '' }}</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Title<span class="textred">(*)</span></label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 {!! Form::text('title', null, ['class' => 'form-control col-md-7 col-xs-12', 'required' => false, 'value' => old('title')]) !!}

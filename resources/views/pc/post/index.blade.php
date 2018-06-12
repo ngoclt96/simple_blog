@@ -67,7 +67,7 @@
                                                             @include('pc.elements.approve', ['item' => $post])
                                                             @else
 
-                                                            {!! $name !!}
+                                                            {{ $name }}
 
                                                             @endif
                                                         </td>

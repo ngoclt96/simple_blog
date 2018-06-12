@@ -11,28 +11,19 @@ use WindowsAzure\MediaServices\Models\Asset;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 
-class BaseController extends Controller
+class BaseController
 {
     protected $view;
-    protected $limit;
     protected $model;
     protected $controller;
-    protected  $action;
     public function __construct()
     {
-        if(!is_null(Route::getCurrentRoute())) {
-            $route = class_basename(Route::getCurrentRoute()->getActionName());
+        if(!is_null(Route::current())) {
+            $route = class_basename(Route::current()->getActionName());
             list($controller, $action) = explode('@', $route);
             $controller = str_replace('controller', '', strtolower($controller));
-            $action = strtolower($action);
-            $this->controller = $controller;
-            $this->action = $action;
             $this->view = $this->getViewDir() . '.' . $controller . '.' . $action;
-            $this->view =  $this->getViewDir() . '.' . $controller . '.' . $action;
-            $this->limit = Constants::PAGE_RECORD;
-            if(($limit = request('limit')) && intval($limit) > 0 ){
-                $this->limit = $limit;
-            }
+
         }
     }
     protected function view($data = null)

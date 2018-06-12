@@ -102,6 +102,7 @@ class UserController extends BaseController
      */
     public function logout(Request $request)
     {
+        $request->session()->forget('permission');
         $this->guard()->logout();
         return redirect(route("user.login.form"));
     }

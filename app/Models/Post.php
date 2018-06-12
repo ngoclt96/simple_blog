@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class Post extends BaseModel
@@ -56,19 +57,22 @@ class Post extends BaseModel
         ]
     ];
 
-    public function user() {
+    public $timestamps = true;
+
+    public function user()
+    {
         return $this->belongsTo('App\Models\User');
     }
 
-    public function pluckUser() {
-        return DB::table('users')->pluck('name', 'id');
-    }
-
-    public $timestamps = true;
-
     public function scopeAvailablePosts($query)
     {
-        $query->where('deleted', 0);
+        $permission = request()->session()->get('permission');
+        if($permission == 1) {
+            $query->where('deleted', 0);
+        }
+        else {
+            $query->where([['deleted', 0], ['user_id', Auth::user()->id]]);
+        }
         return $query;
     }
 }

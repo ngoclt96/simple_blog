@@ -58,7 +58,7 @@ class Kernel extends HttpKernel
 
 
         // Authorization
-        'ceberus' => \App\Http\Middleware\CerberusMiddleware::class,
+//        'ceberus' => \App\Http\Middleware\CerberusMiddleware::class,
 
      
     ];
