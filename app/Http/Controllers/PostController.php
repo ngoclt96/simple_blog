@@ -89,8 +89,10 @@ class PostController extends BaseController
             $post->id = $id;
             if ($post->approve == 1) {
                 $post->approve = 0;
+                $post->approver_id = null;
             } else {
                 $post->approve = 1;
+                $post->approver_id = Auth::user()->id;
             }
             $post->save();
             return redirect(route('posts.index'));
