@@ -254,7 +254,7 @@ class UserController extends BaseController
         ]);
         $user = $user->fill($request->input());
         $user->password = Hash::make($user->password);
-        $user->permission = 1;
+        $user->permission = 0;
         $user->save();
         return redirect(route('user.login.form'));
     }
