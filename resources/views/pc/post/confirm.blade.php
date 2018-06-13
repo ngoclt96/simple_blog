@@ -25,7 +25,7 @@
                         </div>
                         <div class="ln_solid col-md-12"></div>
                         <div class="form-group col-md-12 text-center">
-                            @if($post->id)
+                            @if ($post->id)
                                 <a href="{{ route('posts.edit', ['id' => $post->id, 'back' => 'true']) }}" class="buttonFinish  btn btn-default">Back</a>
                             @else
                                 <a href="{{ route('posts.form', ['back' => 'true']) }}" class="buttonFinish  btn btn-default">Back</a>

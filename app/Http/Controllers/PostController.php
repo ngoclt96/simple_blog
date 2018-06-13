@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\AppConst\Constants;
+use App\Models\BaseModel;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -13,7 +13,7 @@ class PostController extends BaseController
 {
     use ValidatesRequests, AuthorizesRequests;
 
-    protected $limit = Constants::PAGE_RECORD;
+    protected $limit = Post::PAGE_RECORD;
 
     public function index()
     {
@@ -115,7 +115,8 @@ class PostController extends BaseController
                 'posts.updated_at'
             )
                 ->where('posts.id', $id)
-                ->join('users', 'users.id', 'posts.user_id')->first();
+                ->join('users', 'users.id', 'posts.user_id')
+                ->first();
             return view($this->getViewDir() . '.' . 'post.show', ['post' => $detail_post]);
         }
         return redirect(route('posts.index'))->with('success', 'This post has not been approved by the admin!');
@@ -124,8 +125,12 @@ class PostController extends BaseController
 
     public function post_approved()
     {
-        $post_approved = Post::where('posts.approve', 1)->select('posts.*', 'users.name')
-            ->join('users', 'users.id', 'posts.user_id')->get();
+        $model = new Post();
+        $post_approved = $model->select('posts.*', 'users.name')
+                                ->where('posts.approve', 1)
+                                ->where('posts.deleted', 0)
+                                ->join('users', 'users.id', 'posts.user_id')
+                                ->get();
         return view('home', ['post' => $post_approved]);
 
     }

@@ -2,16 +2,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Auth\Events\Lockout;
-use Illuminate\Cache\RateLimiter;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Str;
 
 class UserController extends BaseController
 {
@@ -104,7 +99,7 @@ class UserController extends BaseController
     {
         $request->session()->forget('permission');
         $this->guard()->logout();
-        return redirect(route("user.login.form"));
+        return redirect(route("home"));
     }
 
     /**

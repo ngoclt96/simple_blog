@@ -20,7 +20,7 @@
                                     @if ($errors->has('name'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
@@ -48,14 +48,13 @@
                                     @if ($errors->has('password'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                                 </div>

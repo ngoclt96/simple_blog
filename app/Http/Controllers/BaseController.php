@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\AppConst\Constants;
+use App\Models\BaseModel;
 use Assets;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class BaseController
     }
     protected function getViewDir()
     {
-        return Constants::VIEW_DIR;
+        return BaseModel::VIEW_DIR;
     }
     public function index()
     {
@@ -40,7 +41,7 @@ class BaseController
     }
     public function form()
     {
-        return response()->view(Constants::VIEW_DIR . '.errors.404', [], '404');
+        return response()->view(BaseModel::VIEW_DIR . '.errors.404', [], '404');
     }
     public function complete()
     {

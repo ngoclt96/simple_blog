@@ -11,7 +11,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-5">
-                            <a href="{{ route('posts.index') }}" class="btn btn-primary">@lang('Go to manager')</a>
+                            <a href="{{ route('posts.index') }}" class="btn btn-primary">Go to manager</a>
                         </div>
                     </div>
                 </div>

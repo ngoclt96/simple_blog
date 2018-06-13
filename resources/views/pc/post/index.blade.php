@@ -49,7 +49,7 @@
                                         @include("pc.elements.table_heading", ['heading' => $searchField, 'checkall' => true])
                                         </thead>
                                         <tbody>
-                                        @if(!$pages->count())
+                                        @if (! $pages->count())
                                             <tr align="center">
                                                 <td colspan="11">{{ "No data avaiable in table" }}</td>
                                             </tr>
@@ -59,15 +59,15 @@
                                                     <td class="text-center"><input type="checkbox"
                                                                                    class="form-control check-el"
                                                                                    name="{{ $post->id }}"></td>
-                                                    @foreach($searchField as $key => $value)
+                                                    @foreach ($searchField as $key => $value)
                                                         @php $name = $post->$key @endphp
 
                                                         <td class="text-center">
-                                                            @if($key == "approve")
-                                                            @include('pc.elements.approve', ['item' => $post])
+                                                            @if ($key == "approve")
+                                                                @include('pc.elements.approve', ['item' => $post])
                                                             @else
 
-                                                            {{ $name }}
+                                                                {{ $name }}
 
                                                             @endif
                                                         </td>

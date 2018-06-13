@@ -7,6 +7,15 @@ use Illuminate\Support\Facades\DB;
 
 class Post extends BaseModel
 {
+    
+    const PAGE_RECORD = 5;
+    const APPROVER= 1;
+    const NON_APPROVER = 0;
+    const APPROVER_STATUS = [
+        self::APPROVER => 'approve',
+        self::NON_APPROVER => 'none_approve'
+    ];
+    
     protected $table = "posts";
 
     protected $fillable = [
@@ -52,7 +61,7 @@ class Post extends BaseModel
             'search' => [
                 'type' => 'selectbox',
                 'placeholder' => '---',
-                'data' => \App\AppConst\Constants::APPROVER_STATUS
+                'data' => Post::APPROVER_STATUS
             ]
         ]
     ];

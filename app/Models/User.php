@@ -1,5 +1,6 @@
 <?php
 namespace App\Models;
+
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -7,6 +8,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+
 class User extends BaseModel implements
     AuthenticatableContract,
     AuthorizableContract,
@@ -31,7 +33,7 @@ class User extends BaseModel implements
     protected $hidden = [
         'password'
     ];
-    public $timestamps = true;
+
     protected $searchAble = [
         'id' => [
             'label' => 'ID',
@@ -59,12 +61,7 @@ class User extends BaseModel implements
             ]
         ]
     ];
-    /**
-     * Get all children department of current user
-     */
-    public function scopeAvailableUsers($query)
-    {
-        $query->where('deleted', 0);
-        return $query;
-    }
+
+    public $timestamps = true;
+
 }

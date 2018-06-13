@@ -5,6 +5,9 @@ use Carbon\Carbon;
 use App\AppConst\Constants;
 class BaseModel extends Model
 {
+    const VIEW_DIR = 'pc';
+    const DATE_FORMAT = 'Y-m-d';
+
     protected $searchAble = [];
     /**
      * @return array
@@ -34,7 +37,7 @@ class BaseModel extends Model
                         $query->where($tableModel . '.' . $key, '=', $params[$key]);
                         break;
                     case 'date' :
-                        $date = Carbon::createFromFormat(Constants::DATE_FORMAT, $params[$key])->format('Y-m-d');
+                        $date = Carbon::createFromFormat(BaseModel::DATE_FORMAT, $params[$key])->format('Y-m-d');
                         if ($date) {
                             $query->whereDate($tableModel . '.' . $key, $date);
                         }
