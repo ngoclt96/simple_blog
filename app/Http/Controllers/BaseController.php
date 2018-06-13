@@ -19,7 +19,7 @@ class BaseController
     protected $controller;
     public function __construct()
     {
-        if(!is_null(Route::current())) {
+        if (!is_null(Route::current())) {
             $route = class_basename(Route::current()->getActionName());
             list($controller, $action) = explode('@', $route);
             $controller = str_replace('controller', '', strtolower($controller));
@@ -53,7 +53,7 @@ class BaseController
         $model = '\App\Models\\' . $modelName;
         $data  = Input::all();
         $id = $data['id'];
-        if($record = $model::where('id',$id )->first()) {
+        if ($record = $model::where('id',$id )->first()) {
             DB::transaction(function () use ($record) {
                 try {
                     $ts = Carbon::now()->toDateTimeString();
