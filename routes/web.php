@@ -26,6 +26,7 @@ Route::get('register/index', 'Auth\Users\RegisterController@index')->name('user.
 
 /*login user*/
 Route::prefix('admin')->middleware('user.guest')->group(function () {
+    Route::get('', 'UserController@showLoginForm')->name('user.login.form');
     Route::get('login', 'UserController@showLoginForm')->name('user.login.form');
     Route::post('login', 'UserController@login')->name('user.login');
     Route::get('register', 'UserController@showRegisterForm')->name('user.register.form');
