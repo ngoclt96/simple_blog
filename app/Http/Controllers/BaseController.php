@@ -1,14 +1,10 @@
 <?php
-namespace App\Http\Controllers;
-use App\AppConst\Constants;
-use App\Models\BaseModel;
-use Assets;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Route;
-use WindowsAzure\MediaServices\Models\Asset;
 
+namespace App\Http\Controllers;
+
+use App\Models\BaseModel;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 
