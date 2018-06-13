@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\BaseModel;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -44,10 +43,11 @@ class PostController extends BaseController
             $post->fill(old());
         }
 
-        (request()->session()->has('postsConfirm') && request()->query('back') == 'true') ? $post = request()->session()->get('postsConfirm') : request()->session()->forget('postsConfirm');
+        (request()->session()->has('postsConfirm') && request()->query('back') == 'true')
+            ? $post = request()->session()->get('postsConfirm') : request()->session()->forget('postsConfirm');
+
         $post->id = $id;
         $this->view(['post' => $post]);
-
     }
 
     public function confirm(Request $request)
@@ -66,7 +66,6 @@ class PostController extends BaseController
 
         $request->session()->put('postsConfirm', $post);
         $this->view(['post' => $post]);
-
     }
 
     public function complete()
@@ -85,15 +84,14 @@ class PostController extends BaseController
         $postsConfirm->save();
         request()->session()->forget('postsConfirm');
         $this->view();
-
     }
 
     public function delete()
     {
         $id = request()->id;
         $this->deleteRecord('Post', $id);
+        
         return redirect(route('posts.index'));
-
     }
 
     public function approve($id = null)
@@ -119,7 +117,6 @@ class PostController extends BaseController
         }
 
         return redirect(route('posts.index'))->with('success', 'You have no right to approve this post!');
-
     }
 
 
@@ -148,7 +145,6 @@ class PostController extends BaseController
         }
 
         return redirect(route('posts.index'))->with('success', 'This post has not been approved by the admin!');
-
     }
 
     public function postApproved()
@@ -164,6 +160,5 @@ class PostController extends BaseController
             ->get();
 
         return view('home', ['post' => $post_approved]);
-
     }
 }

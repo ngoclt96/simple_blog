@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\BaseModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 
 class BaseController
@@ -59,6 +58,7 @@ class BaseController
             return array();
         }
         $model = '\App\Models\\' . $modelName;
+        
         if ($record = $model::where('id', $id)->first()) {
             DB::transaction(function () use ($record) {
                 try {
@@ -70,6 +70,7 @@ class BaseController
                 }
             });
         }
+        
     }
 
 }

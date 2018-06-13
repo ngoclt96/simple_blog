@@ -17,7 +17,7 @@ class UserController extends BaseController
     }
 
     protected $redirectTo = '/admin/posts';
-    
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @uses change login view to current project view
@@ -25,7 +25,6 @@ class UserController extends BaseController
     public function showLoginForm()
     {
         return view($this->getViewDir() . '.' . 'user.login');
-        
     }
 
     protected function validateLogin(Request $request)
@@ -45,9 +44,10 @@ class UserController extends BaseController
     public function logout(Request $request)
     {
         $request->session()->forget('permission');
+
         $this->guard()->logout();
+
         return redirect(route("home"));
-        
     }
 
     /**
@@ -57,7 +57,6 @@ class UserController extends BaseController
     public function showRegisterForm()
     {
         return view($this->getViewDir() . '.' . 'user.register');
-        
     }
 
     /**
@@ -69,19 +68,20 @@ class UserController extends BaseController
     public function register(Request $request)
     {
         $user = new User();
+
         $this->validate($request,
             [
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
                 'password' => 'required'
             ]);
+
         $user = $user->fill($request->input());
         $user->password = Hash::make($user->password);
         $user->permission = User::USER;
         $user->save();
-        
+
         return redirect(route('user.login.form'));
-        
     }
 
 }
