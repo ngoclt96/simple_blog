@@ -25,6 +25,7 @@ class UserController extends BaseController
     public function showLoginForm()
     {
         return view($this->getViewDir() . '.' . 'user.login');
+        
     }
 
     protected function validateLogin(Request $request)
@@ -46,6 +47,7 @@ class UserController extends BaseController
         $request->session()->forget('permission');
         $this->guard()->logout();
         return redirect(route("home"));
+        
     }
 
     /**
@@ -55,6 +57,7 @@ class UserController extends BaseController
     public function showRegisterForm()
     {
         return view($this->getViewDir() . '.' . 'user.register');
+        
     }
 
     /**
@@ -76,7 +79,9 @@ class UserController extends BaseController
         $user->password = Hash::make($user->password);
         $user->permission = User::USER;
         $user->save();
+        
         return redirect(route('user.login.form'));
+        
     }
 
 }

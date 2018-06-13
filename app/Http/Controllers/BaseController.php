@@ -28,32 +28,32 @@ class BaseController
         }
     }
 
-    public function view($data = null)
+    protected function view($data = null)
     {
         echo view($this->view)->with($data);
     }
 
-    public function getViewDir()
+    protected function getViewDir()
     {
         return BaseModel::VIEW_DIR;
     }
 
-    public function index()
+    protected function index()
     {
         $this->view();
     }
 
-    public function form()
+    protected function form()
     {
         return response()->view(BaseModel::VIEW_DIR . '.errors.404', [], '404');
     }
 
-    public function complete()
+    protected function complete()
     {
         $this->view();
     }
 
-    public function deleteRecord($modelName, $id)
+    protected function deleteRecord($modelName, $id)
     {
         if (empty($modelName) || empty($id)) {
             return array();

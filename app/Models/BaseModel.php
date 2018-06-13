@@ -47,8 +47,11 @@ class BaseModel extends Model
                         break;
                 }
             }
+
         }
+
         return $query;
+
     }
     public function getDateFields()
     {

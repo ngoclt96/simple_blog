@@ -83,6 +83,8 @@ class Post extends BaseModel
         else {
             $query->where([['deleted', self::NOT_DELETE], ['user_id', Auth::user()->id]]);
         }
+        
         return $query;
+        
     }
 }

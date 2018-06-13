@@ -17,7 +17,7 @@
  * use login
  * ----------------------------------------
  */
-Route::get('/', 'PostController@post_approved')->name('home');
+Route::get('/', 'PostController@postApproved')->name('home');
 /*register user*/
 Route::get('register/{id}', 'Auth\Users\RegisterController@form')->name('user.register.edit');
 Route::post('register/confirm', 'Auth\Users\RegisterController@confirm')->name('user.register.confirm');
