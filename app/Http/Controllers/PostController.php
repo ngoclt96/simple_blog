@@ -14,6 +14,17 @@ class PostController extends BaseController
 
     protected $limit = Post::PAGE_RECORD;
 
+    private $postTableName;
+    private $userTableName;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->postTableName = (new Post())->getTable();
+        $this->userTableName = (new User())->getTable();
+
+    }
+
     public function index()
     {
         $model = new Post();
@@ -90,7 +101,7 @@ class PostController extends BaseController
     {
         $id = request()->id;
         $this->deleteRecord('Post', $id);
-        
+
         return redirect(route('posts.index'));
     }
 
@@ -111,7 +122,7 @@ class PostController extends BaseController
             }
 
             $post->save();
-            
+
             return redirect(route('posts.index'));
 
         }
@@ -126,18 +137,16 @@ class PostController extends BaseController
         $post->id = $id;
 
         if ($post->approve == Post::APPROVER) {
-            $postTableName = (new Post())->getTable();
-            $userTableName = (new User())->getTable();
             $detail_post = $post->select
             (
-                "$userTableName.name",
-                "$postTableName.title",
-                "$postTableName.content",
-                "$postTableName.created_at",
-                "$postTableName.updated_at"
+                "$this->userTableName.name",
+                "$this->postTableName.title",
+                "$this->postTableName.content",
+                "$this->postTableName.created_at",
+                "$this->postTableName.updated_at"
             )
-                ->where("$postTableName.id", $id)
-                ->join("$userTableName", "$userTableName.id", "$postTableName.user_id")
+                ->where("$this->postTableName.id", $id)
+                ->join("$this->userTableName", "$this->userTableName.id", "$this->postTableName.user_id")
                 ->first();
 
             return view($this->getViewDir() . '.' . 'post.show', ['post' => $detail_post]);
@@ -150,13 +159,11 @@ class PostController extends BaseController
     public function postApproved()
     {
         $model = new Post();
-        $postTableName = (new Post())->getTable();
-        $userTableName = (new User())->getTable();
 
-        $post_approved = $model->select("$postTableName.*", "$userTableName.name")
-            ->where("$postTableName.approve", Post::APPROVER)
-            ->where("$postTableName.deleted", Post::NOT_DELETE)
-            ->join("$userTableName", "$userTableName.id", "$postTableName.user_id")
+        $post_approved = $model->select("$this->postTableName.*", "$this->userTableName.name")
+            ->where("$this->postTableName.approve", Post::APPROVER)
+            ->where("$this->postTableName.deleted", Post::NOT_DELETE)
+            ->join("$this->userTableName", "$this->userTableName.id", "$this->postTableName.user_id")
             ->get();
 
         return view('home', ['post' => $post_approved]);
