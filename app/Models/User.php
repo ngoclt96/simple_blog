@@ -15,7 +15,12 @@ class User extends BaseModel implements
     CanResetPasswordContract
 {
     use Notifiable, Authenticatable, Authorizable, CanResetPassword;
+
+    const ADMIN = 1;
+    const USER = 0;
+    
     public static $check_attemp = false;
+    
     protected $table = 'users';
     /**
      * The attributes that are mass assignable.
@@ -61,7 +66,6 @@ class User extends BaseModel implements
             ]
         ]
     ];
-
-    public $timestamps = true;
+    
 
 }

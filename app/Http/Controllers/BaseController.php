@@ -10,9 +10,13 @@ use Illuminate\Support\Facades\DB;
 
 class BaseController
 {
+    const DELETED = 1;
+    const NOT_DELETE = 0;
+
     protected $view;
     protected $model;
     protected $controller;
+
     public function __construct()
     {
         if (!is_null(Route::current())) {
@@ -23,37 +27,43 @@ class BaseController
 
         }
     }
-    protected function view($data = null)
+
+    public function view($data = null)
     {
         echo view($this->view)->with($data);
     }
-    protected function getViewDir()
+
+    public function getViewDir()
     {
         return BaseModel::VIEW_DIR;
     }
+
     public function index()
     {
         $this->view();
     }
+
     public function form()
     {
         return response()->view(BaseModel::VIEW_DIR . '.errors.404', [], '404');
     }
+
     public function complete()
     {
         $this->view();
     }
 
-    public function deleteRecord($modelName)
+    public function deleteRecord($modelName, $id)
     {
+        if (empty($modelName) || empty($id)) {
+            return array();
+        }
         $model = '\App\Models\\' . $modelName;
-        $data  = Input::all();
-        $id = $data['id'];
-        if ($record = $model::where('id',$id )->first()) {
+        if ($record = $model::where('id', $id)->first()) {
             DB::transaction(function () use ($record) {
                 try {
                     $ts = Carbon::now()->toDateTimeString();
-                    $data = array('deleted_at' => $ts, 'deleted' => 1);
+                    $data = array('deleted_at' => $ts, 'deleted' => self::DELETED);
                     $record->update($data);
                 } catch (\PDOException $e) {
                     throw $e;

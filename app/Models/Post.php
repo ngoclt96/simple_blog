@@ -11,10 +11,13 @@ class Post extends BaseModel
     const PAGE_RECORD = 5;
     const APPROVER= 1;
     const NON_APPROVER = 0;
+    const DELETED = 1;
+    const NOT_DELETE = 0;
     const APPROVER_STATUS = [
         self::APPROVER => 'approve',
         self::NON_APPROVER => 'none_approve'
     ];
+
     
     protected $table = "posts";
 
@@ -66,8 +69,6 @@ class Post extends BaseModel
         ]
     ];
 
-    public $timestamps = true;
-
     public function user()
     {
         return $this->belongsTo('App\Models\User');
@@ -77,10 +78,10 @@ class Post extends BaseModel
     {
         $permission = request()->session()->get('permission');
         if($permission == 1) {
-            $query->where('deleted', 0);
+            $query->where('deleted', self::NOT_DELETE);
         }
         else {
-            $query->where([['deleted', 0], ['user_id', Auth::user()->id]]);
+            $query->where([['deleted', self::NOT_DELETE], ['user_id', Auth::user()->id]]);
         }
         return $query;
     }

@@ -3,7 +3,7 @@
 @section('content')
     <div class="login_wrapper">
         <section class="login_content">
-            {!! Form::open(['url' => '/login', 'method' => 'POST', 'class' => 'form-horizontal form-label-left']) !!}
+            {!! Form::open(['url' => '/admin/login', 'method' => 'POST', 'class' => 'form-horizontal form-label-left']) !!}
             <h1>Login User</h1>
             <div class="item form-group @if ($errors->has('email')) bad @endif">
                 @if ($errors->has('email'))

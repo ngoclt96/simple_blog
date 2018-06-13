@@ -9,7 +9,7 @@
         $key = $item['arg']['0'];
         $val = $item['arg']['1'];
     } else {
-        $module = request()->segment(1);
+        $module = request()->segment(2);
         $edit = route($module. '.edit', $item->id);
         $delete = route($module . '.delete');
         $show = route($module . '.show', $item->id);

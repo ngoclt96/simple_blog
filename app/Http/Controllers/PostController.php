@@ -47,10 +47,11 @@ class PostController extends BaseController
     public function confirm(Request $request)
     {
         $post = new Post();
-        $this->validate($request, [
-            'title' => 'required',
-            'content' => 'required'
-        ]);
+        $this->validate($request,
+            [
+                'title' => 'required',
+                'content' => 'required'
+            ]);
         $post->fill($request->input());
         if ($request->input('id')) {
             $post->id = $request->input('id');
@@ -76,7 +77,8 @@ class PostController extends BaseController
 
     public function delete()
     {
-        $this->deleteRecord('Post');
+        $id = request()->id;
+        $this->deleteRecord('Post', $id);
         return redirect(route('posts.index'));
 
     }
